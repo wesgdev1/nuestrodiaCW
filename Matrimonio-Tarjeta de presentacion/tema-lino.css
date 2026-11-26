@@ -1,0 +1,144 @@
+/* =====================================================================
+   TEMA LINO · tierra clara (prueba)
+   Se carga DESPUÉS de style.css y sobrescribe solo colores.
+   Para volver al tema morado: quita la línea <link ... tema-lino.css>
+   ===================================================================== */
+:root{
+  --linen:#f4ebe0;      /* fondo lino */
+  --linen2:#efe4d6;
+  --paper:#fffaf3;      /* tarjetas */
+  --ink:#38342f;        /* texto principal (carbón cálido) */
+  --ink-soft:#38342fb8;
+  --clay:#b0643f;       /* terracota: acentos y títulos */
+  --clay-2:#c9845f;
+  --sage:#8a9878;       /* salvia */
+  --blush:#d9a593;      /* rubor */
+  --gilt:#b8935a;       /* dorado envejecido: líneas */
+  --line:#38342f1f;
+  /* variables originales que se reutilizan */
+  --gold:var(--clay);
+  --rose:#b9705b;
+  --accent:#b5523b;
+  --bg:var(--linen);
+  --deep:#e6dccf;
+}
+
+/* ---------- base ---------- */
+body{background:var(--deep);color:var(--ink)}
+@media(min-width:560px){body{background:radial-gradient(circle at 50% 30%,#f7f0e7,#e2d6c6 75%)}}
+#journey{background:var(--linen);box-shadow:0 0 80px #8a6a4a22}
+p{color:var(--ink-soft)}
+h1{color:var(--ink);text-shadow:0 2px 24px #fffaf3cc}
+h1 em{color:var(--clay)}
+h2{color:var(--ink)}
+.big{color:var(--ink)}
+.kicker{color:var(--clay)}
+.lead{color:var(--rose)}
+.sign{color:var(--clay)}
+
+/* Textura de lino (ruido SVG muy suave sobre cada sección) */
+.station::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.45;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9 .35' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .35 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- fondos por estación (crema → rubor → salvia, sin cafés) ---------- */
+.hero{background:radial-gradient(ellipse at 50% 0%,#fbf6ef 0%,var(--linen) 70%)}
+.ny{background:linear-gradient(var(--linen),#f1e6da 60%,#f3e2da)}
+.date-s{background:linear-gradient(#f3e2da,#f5e7e0 60%,#f1e4da)}
+.place{background:linear-gradient(#f1e4da,#eee8dc)}
+.dress{background:linear-gradient(#eee8dc,#f4ebe0 60%,#f5e9e1)}
+.ellas{background:linear-gradient(#f5e9e1,#f4e3dc)}
+.ellos{background:linear-gradient(#f4e3dc,#eae9dd)}
+.agenda{background:linear-gradient(#eae9dd,#f2ebdf 50%,#f4ebe0)}
+.guide{background:linear-gradient(#f4ebe0,#f3e5dc)}
+.rsvp{background:linear-gradient(#f3e5dc,#f4ebe0 60%,var(--linen))}
+.hero::after{background:linear-gradient(135deg,#fffaf333,transparent 45%,#d9a59326)}
+
+/* ---------- legibilidad sobre fotos ---------- */
+/* halo crema suave: el texto oscuro no se pierde cuando pasa sobre una foto */
+.box{text-shadow:0 0 2px #fffaf3cc,0 1px 14px #fffaf3}
+/* Inicio: la foto ocupa la primera pantalla; la tarjeta arranca abajo,
+   sobre la parte donde la foto ya se difumina (se asoma para invitar a bajar) */
+.hero{align-items:start;min-height:auto;padding-top:76vh;padding-top:76svh}
+.hero-ph{height:94vh;height:94svh;object-position:50% 30%;
+  -webkit-mask-image:linear-gradient(#000 66%,transparent 99%);mask-image:linear-gradient(#000 66%,transparent 99%)}
+/* Inicio: tarjeta de lino translúcida (vidrio esmerilado) sobre la foto */
+.hero .box{max-width:400px;margin:0 auto;padding:28px 22px 26px;border-radius:28px;
+  background:linear-gradient(180deg,#fffaf3d1,#f6eee4e6);
+  -webkit-backdrop-filter:blur(10px) saturate(1.1);backdrop-filter:blur(10px) saturate(1.1);
+  border:1px solid #fffaf3;box-shadow:0 24px 60px #5a40281f,inset 0 1px 0 #fff;text-shadow:none}
+.hero .kicker{margin-bottom:14px}
+.hero h1{text-shadow:none;margin-bottom:12px}
+.hero .lead{margin-bottom:14px}
+.hero .date{margin-bottom:22px;color:var(--ink)}
+.hero .go{background:#fffaf3;border-color:#b0643f55}
+/* fotos de fondo más tenues detrás de texto */
+.ring-ph{opacity:.22}
+.end-ph{opacity:.2}
+.sky{fill:#e3d8c9;opacity:.9}
+
+/* ---------- camino + perrita ---------- */
+#road-bg{stroke:#38342f2e}
+#road-fg{stroke:var(--gilt)}
+#walker{background:radial-gradient(circle at 50% 40%,#fff,var(--paper));border-color:var(--gilt);box-shadow:0 4px 16px #8a6a4a40}
+#walker::before{border-color:var(--gilt)}
+#walker b{background:linear-gradient(135deg,var(--clay-2),var(--accent));box-shadow:0 2px 8px #b5523b66}
+
+/* ---------- nav ---------- */
+#nav{background:linear-gradient(#f4ebe0f2,#f4ebe000)}
+#nav a{color:#38342f80}
+#nav a.on{color:var(--clay)}
+#nav a.on i{background:var(--clay);box-shadow:0 0 10px #b0643f88}
+#bar{background:var(--clay);box-shadow:none}
+
+/* ---------- botones ---------- */
+.go{color:var(--clay);border-color:#b0643f66}
+.btn{color:#fffaf3;background:linear-gradient(135deg,var(--clay-2),var(--clay));box-shadow:0 8px 24px #b0643f40}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid #38342f40;box-shadow:none}
+.btn.wa{background:var(--paper);color:var(--ink);border:1px solid #25d36699}
+
+/* ---------- fecha ---------- */
+.cal{background:var(--paper);color:var(--ink);border-top-color:var(--clay);box-shadow:0 18px 44px #8a6a4a2e}
+.cal span{color:#38342f99}
+.count div{background:#fffaf3b3;border-color:var(--line)}
+.count b{color:var(--clay)}
+.count i{color:var(--ink)}
+
+/* ---------- info / lugar ---------- */
+.info li{background:#fffaf3b3;border-color:var(--line);box-shadow:0 4px 14px #8a6a4a12}
+.info span,.info b,.info a{color:var(--clay)}
+.info p span{color:inherit}
+.venue{border-color:#fffaf3;box-shadow:0 18px 40px #8a6a4a40}
+.venue-tx{text-shadow:0 1px 10px #000a}
+
+/* ---------- vestimenta ---------- */
+.palette li{color:var(--ink-soft)}
+.palette i{border-color:#fffaf3;box-shadow:0 6px 14px #8a6a4a33}
+.note b{color:var(--clay)}
+.strip i{border-color:#fffaf3;box-shadow:0 2px 6px #8a6a4a26}
+.rules li{color:var(--ink)}
+.rules span{background:var(--sage);color:#fffaf3}
+.rules .no span{background:var(--accent);color:#fffaf3}
+.rules b{color:var(--clay)}
+.looks figure{background:#38342f0a}
+.looks.wide figure{box-shadow:0 12px 30px #8a6a4a33;border-color:#fffaf3}
+.looks .empty{border-color:#38342f33}
+.looks .empty span{color:#38342f80}
+
+/* ---------- itinerario ---------- */
+.timeline::before{background:linear-gradient(transparent,var(--gilt) 3%,var(--gilt) 97%,transparent)}
+.timeline .ic{color:var(--clay);filter:none}
+.timeline .dot{color:var(--blush);text-shadow:none}
+.timeline .tx b{color:var(--clay)}
+.timeline .tx span{color:var(--ink)}
+
+/* ---------- confirmación ---------- */
+.rsvp-card{background:linear-gradient(160deg,#fffaf3e6,#fffaf3b3);border-color:#b8935a55;box-shadow:0 18px 40px #8a6a4a24,inset 0 1px 0 #fff}
+.field>span{color:var(--clay)}
+.field small{color:#38342f88}
+.select::after{border-color:var(--clay)}
+.field select,.field textarea{color:var(--ink);background:#fff;border-color:#38342f26}
+.field textarea::placeholder{color:#38342f66}
+.field select:focus,.field textarea:focus{border-color:var(--clay);box-shadow:0 0 0 4px #b0643f22}
+#rsvp-status{color:var(--clay)}
+.or{color:#38342f88}
+.or::before,.or::after{background:#38342f22}
