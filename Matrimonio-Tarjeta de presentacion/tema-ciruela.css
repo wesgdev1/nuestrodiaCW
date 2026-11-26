@@ -1,0 +1,77 @@
+/* =====================================================================
+   TEMA CIRUELA · noche ciruela/vino + terracota + champaña
+   Paleta: Ciruela #4f2a3b · Vino #6a303d · Terracota #9c604c
+           Chocolate #5c4537 · Champaña #d3c1a1
+   Se carga DESPUÉS de style.css (base oscura original) y cambia colores.
+   Los colores de vestimenta (paleta de trajes) NO se tocan.
+   ===================================================================== */
+:root{
+  --ciruela:#4f2a3b; --vino:#6a303d; --terracota:#9c604c; --chocolate:#5c4537; --champana:#d3c1a1;
+  --noche:#22121b;               /* ciruela muy profundo (fondo base) */
+  --bg:var(--noche); --bg2:var(--ciruela); --deep:#150a10;
+  --gold:var(--champana);        /* todo lo que era dorado pasa a champaña */
+  --rose:#d9a08a;                /* terracota claro para textos script */
+  --accent:var(--terracota);
+  --ivory:#f6eee2; --muted:#7a5a62;
+}
+
+/* ---------- base ---------- */
+body{background:var(--deep)}
+@media(min-width:560px){body{background:radial-gradient(circle at 50% 30%,#3a1d2a,var(--deep) 70%)}}
+#journey{background:var(--bg);box-shadow:0 0 120px #d3c1a11a}
+.box{text-shadow:0 2px 14px #150a10}
+h1{text-shadow:0 2px 30px #150a10,0 0 40px #d3c1a14d}
+#nav{background:linear-gradient(#22121bf0,#22121b00)}
+#nav a.on i{box-shadow:0 0 10px var(--champana)}
+#bar{box-shadow:0 0 8px var(--champana)}
+
+/* ---------- fondos con profundidad: degradé + destellos de luz ---------- */
+.hero{background:radial-gradient(ellipse at 50% 0%,#7a3646 0%,var(--noche) 70%)}
+.hero::after{background:linear-gradient(135deg,#6a303d66,transparent 45%,#9c604c2e)}
+.ny{background:radial-gradient(circle at 85% 20%,#9c604c26,transparent 45%),linear-gradient(var(--noche),#33182a 60%,var(--ciruela))}
+.date-s{background:radial-gradient(circle at 15% 80%,#d3c1a11a,transparent 40%),linear-gradient(var(--ciruela),#5c2c3c 70%,var(--vino))}
+.place{background:radial-gradient(circle at 80% 85%,#9c604c33,transparent 45%),linear-gradient(var(--vino),#55283a)}
+.dress{background:radial-gradient(circle at 20% 15%,#d3c1a114,transparent 40%),linear-gradient(#55283a,#3f2430 60%,#3a2a2c)}
+.ellas{background:radial-gradient(circle at 85% 30%,#9c604c2b,transparent 45%),linear-gradient(#3a2a2c,var(--ciruela))}
+.ellos{background:radial-gradient(circle at 15% 70%,#5c45374d,transparent 45%),linear-gradient(var(--ciruela),#3d2a2e)}
+.agenda{background:radial-gradient(circle at 50% 50%,#6a303d40,transparent 60%),linear-gradient(#3d2a2e,#2e1824 50%,var(--ciruela))}
+.guide{background:radial-gradient(circle at 80% 20%,#d3c1a114,transparent 40%),linear-gradient(var(--ciruela),var(--vino))}
+.rsvp{background:radial-gradient(circle at 50% 100%,#9c604c33,transparent 50%),linear-gradient(var(--vino),#3a1d2a 60%,var(--noche))}
+
+/* ---------- ornamentos en las 4 esquinas (lineas + bolitas champaña) ---------- */
+.station::before{content:"";position:absolute;inset:72px 14px 14px;z-index:1;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22matrix(-1%200%200%201%20110%200)%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22matrix(1%200%200%20-1%200%20110)%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22matrix(-1%200%200%20-1%20110%20110)%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-repeat:no-repeat;
+  background-position:top left,top right,bottom left,bottom right;
+  background-size:92px 92px}
+/* marco fino que une las esquinas */
+.station::after{content:"";position:absolute;inset:80px 22px 22px;z-index:1;pointer-events:none;border:1px solid #d3c1a11a;border-radius:6px}
+.hero::after{inset:0;border:0;border-radius:0}
+/* inicio: solo esquinas inferiores (no tapar la foto) */
+.hero::before{top:auto;height:92px;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22matrix(1%200%200%20-1%200%20110)%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E"),url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22110%22%20height%3D%22110%22%20viewBox%3D%220%200%20110%20110%22%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%23d3c1a1%22%20stroke-linecap%3D%22round%22%20opacity%3D%22.7%22%20transform%3D%22matrix(-1%200%200%20-1%20110%20110)%22%3E%3Cpath%20d%3D%22M6%2078V22Q6%206%2022%206h56%22%20stroke-width%3D%221.4%22%2F%3E%3Cpath%20d%3D%22M15%2056V30q0-15%2015-15h26%22%20stroke-width%3D%221%22%20opacity%3D%22.55%22%2F%3E%3Ccircle%20cx%3D%2222%22%20cy%3D%2222%22%20r%3D%222.2%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2284%22%20cy%3D%226%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2284%22%20r%3D%222%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%2F%3E%3Ccircle%20cx%3D%2293%22%20cy%3D%226%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%2293%22%20r%3D%221.3%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%22101%22%20cy%3D%226%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Ccircle%20cx%3D%226%22%20cy%3D%22101%22%20r%3D%22.8%22%20fill%3D%22%23d3c1a1%22%20stroke%3D%22none%22%20opacity%3D%22.5%22%2F%3E%3Cpath%20d%3D%22M30%2030l3-3%203%203-3%203z%22%20fill%3D%22%23c98b74%22%20stroke%3D%22none%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-position:bottom left,bottom right}
+
+/* ---------- camino + perrita ---------- */
+#road-bg{stroke:#f6eee22e}
+#walker{box-shadow:0 4px 16px #0009}
+#walker b{background:linear-gradient(135deg,#c98b74,var(--terracota));box-shadow:0 2px 8px #9c604c88}
+
+/* ---------- botones ---------- */
+.go{border-color:#d3c1a166}
+.btn{color:var(--noche);background:linear-gradient(135deg,#ebe0c8,var(--champana));box-shadow:0 8px 28px #d3c1a147}
+.btn.btn-alt{background:#f6eee212;color:var(--ivory);border:1px solid #f6eee244}
+
+/* ---------- tarjetas ---------- */
+.cal{color:var(--noche);border-top-color:var(--terracota)}
+.cal span{color:var(--muted)}
+.venue::after{background:linear-gradient(transparent 40%,#22121be6)}
+.rsvp-card{border-color:#d3c1a140}
+.field select,.field textarea{background:#150a1099}
+.field select option{color:var(--noche)}
+.field select:focus,.field textarea:focus{box-shadow:0 0 0 4px #d3c1a126}
+
+/* ---------- itinerario ---------- */
+.timeline .ic{filter:drop-shadow(0 0 10px #d3c1a133)}
+.timeline .dot{color:#d9a08a;text-shadow:0 0 10px var(--terracota)}
+
+/* ---------- vestimenta: solo el estilo de los circulos, NO los colores ---------- */
+.palette i{border-color:#f6eee233}
