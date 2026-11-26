@@ -220,6 +220,13 @@ p{font-size:16px;font-weight:300;line-height:1.7;color:#fdf6ece0;max-width:380px
 .btn.wa{display:flex;align-items:center;justify-content:center;gap:10px;background:#fdf6ec0f;color:var(--ivory);
   border:1px solid #25d36699;box-shadow:none}
 .btn.wa svg{width:20px;height:20px;fill:#25d366;flex:none}
+/* Opciones de respuesta agrupadas: Sí / No podré ir / o si prefieres / WhatsApp */
+.rsvp-actions{display:grid;gap:10px;max-width:340px;margin:0 auto 14px}
+.rsvp-actions .btn{margin:0;max-width:none}
+.rsvp-actions .or{margin:4px 0}
+@media(max-width:360px){.rsvp-actions .btn{font-size:12px;letter-spacing:.08em;padding-left:12px;padding-right:12px;white-space:nowrap}}
+/* boton secundario (no usar .ghost: es la clase de la foto de la propuesta) */
+.btn.btn-alt{background:#fdf6ec12;color:var(--ivory);border:1px solid #fdf6ec44;box-shadow:none}
 
 /* Reveal ultra rápido (solo transform/opacity) */
 .reveal{opacity:0;transform:translateY(22px) scale(.98);transition:opacity .35s ease-out,transform .35s cubic-bezier(.2,.8,.2,1)}

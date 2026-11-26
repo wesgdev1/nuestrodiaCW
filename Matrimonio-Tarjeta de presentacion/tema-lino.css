@@ -95,6 +95,8 @@ h2{color:var(--ink)}
 .btn{color:#fffaf3;background:linear-gradient(135deg,var(--clay-2),var(--clay));box-shadow:0 8px 24px #b0643f40}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid #38342f40;box-shadow:none}
 .btn.wa{background:var(--paper);color:var(--ink);border:1px solid #25d36699}
+.btn.btn-alt{background:var(--paper);color:var(--ink);border:1px solid #38342f33;box-shadow:0 4px 12px #8a6a4a14}
+.rsvp-actions .btn.wa{box-shadow:0 4px 12px #8a6a4a14}
 
 /* ---------- fecha ---------- */
 .cal{background:var(--paper);color:var(--ink);border-top-color:var(--clay);box-shadow:0 18px 44px #8a6a4a2e}

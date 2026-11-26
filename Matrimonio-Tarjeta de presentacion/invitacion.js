@@ -50,8 +50,7 @@
     cuposEl.textContent = 'Revisa el link que te enviaron.';
     txt.textContent = 'No pudimos encontrar esta invitación.';
     $('#rsvp-form').style.display = 'none';
-    yes.style.display = no.style.display = 'none';
-    $('.or').style.display = 'none';
+    $('.rsvp-actions').style.display = 'none';
   };
 
   const responder = async (asistira) => {
