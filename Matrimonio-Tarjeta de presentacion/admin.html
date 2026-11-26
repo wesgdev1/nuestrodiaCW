@@ -4,123 +4,410 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Admin · Invitaciones</title>
-<!-- Estilos basicos de prueba (se rediseña despues) -->
+<title>Invitaciones · Admin</title>
+<link rel="icon" href="/img/favicon-perrita.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg: #f7f5f2;
+    --surface: #ffffff;
+    --ink: #1c1917;
+    --muted: #78716c;
+    --faint: #a8a29e;
+    --line: #ebe7e2;
+    --soft: #f3f0ec;
+    --accent: #9a6b4b;
+    --ok: #3f7d58;     --ok-bg: #e9f2ec;
+    --wait: #a16207;   --wait-bg: #fbf3e2;
+    --no: #b42318;     --no-bg: #fbecea;
+    --wa: #1faa59;     --wa-bg: #e8f7ee;
+    --radius: 14px;
+    --shadow: 0 1px 2px #1c19170a, 0 4px 16px #1c191708;
+  }
   * { box-sizing: border-box; }
-  body { margin: 0; font: 15px/1.4 system-ui, sans-serif; background: #f6f2ee; color: #2b1d14; }
-  header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #2b1d14; color: #fff; }
-  main { max-width: 1200px; margin: 0 auto; padding: 16px; }
-  h1 { font-size: 18px; margin: 0; }
-  h2 { font-size: 16px; margin: 0 0 10px; }
-  section { background: #fff; border-radius: 10px; padding: 16px; margin-bottom: 16px; box-shadow: 0 1px 3px #0001; }
-  input, select, textarea, button { font: inherit; padding: 8px 10px; border: 1px solid #ccb; border-radius: 6px; }
-  button { cursor: pointer; background: #fff; }
-  button.primary { background: #b66a32; border-color: #b66a32; color: #fff; }
-  button.danger { color: #a33; border-color: #e3b5b5; }
-  button.sm { padding: 4px 8px; font-size: 13px; }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-  .row > input, .row > select { flex: 1 1 140px; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-  .stat { background: #f6f2ee; border-radius: 8px; padding: 10px; }
-  .stat b { display: block; font-size: 24px; }
-  .stat small { color: #6b5a4c; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 900px; }
-  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; vertical-align: top; }
-  th { font-size: 12px; text-transform: uppercase; color: #6b5a4c; }
-  .tag { display: inline-block; padding: 2px 8px; border-radius: 99px; font-size: 12px; font-weight: 600; }
-  .PENDIENTE { background: #fff3cd; color: #7a5b00; }
-  .CONFIRMADO { background: #d7f0dc; color: #1e6b32; }
-  .RECHAZADO { background: #f6d5d5; color: #8a2a2a; }
-  .muted { color: #8a7a6c; font-size: 12px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 4px; }
-  #login { max-width: 360px; margin: 10vh auto; }
-  #login form { display: grid; gap: 10px; }
-  .error { color: #a33; min-height: 1.2em; }
-  #toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: #2b1d14; color: #fff; padding: 10px 16px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
-  #toast.on { opacity: 1; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; font: 15px/1.5 Jost, system-ui, sans-serif; background: var(--bg); color: var(--ink); }
+  h1, h2, h3 { margin: 0; font-weight: 500; }
+  button, input, select, textarea { font: inherit; color: inherit; }
   [hidden] { display: none !important; }
+  .serif { font-family: Fraunces, Georgia, serif; }
+  .muted { color: var(--muted); }
+  .faint { color: var(--faint); }
+  .ic { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .ic.fill { fill: currentColor; stroke: none; }
+
+  /* ---------- botones / inputs ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); cursor: pointer; font-weight: 500; font-size: 14px; white-space: nowrap; transition: background .15s, border-color .15s, transform .05s; }
+  .btn:hover { background: var(--soft); }
+  .btn:active { transform: scale(.98); }
+  .btn.dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .btn.dark:hover { background: #33302c; }
+  .btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+  .btn.wa:hover { background: #1a9a50; }
+  .btn.ghost { border-color: transparent; background: transparent; }
+  .btn.ghost:hover { background: var(--soft); }
+  .btn.icon { width: 36px; height: 36px; padding: 0; }
+  .btn.sm { height: 34px; padding: 0 12px; font-size: 13px; }
+  .btn:disabled { opacity: .5; cursor: default; }
+  .field { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+  .input { height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); outline: none; transition: border-color .15s, box-shadow .15s; width: 100%; }
+  textarea.input { height: auto; padding: 10px 12px; resize: vertical; }
+  .input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px #9a6b4b1f; }
+
+  /* ---------- login ---------- */
+  #login { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+  .login-card { width: 100%; max-width: 380px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 32px 28px; box-shadow: var(--shadow); }
+  .login-card .mono { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 14px; background: var(--soft); font-family: Fraunces, serif; font-size: 20px; }
+  .login-card h1 { text-align: center; font-family: Fraunces, serif; font-size: 24px; }
+  .login-card p { text-align: center; margin: 4px 0 22px; }
+  .login-card form { display: grid; gap: 12px; }
+  .error { color: var(--no); font-size: 13px; min-height: 1.2em; margin: 0; text-align: center; }
+
+  /* ---------- layout ---------- */
+  header.top { position: sticky; top: 0; z-index: 10; background: #f7f5f2e6; backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .top-in { max-width: 1240px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand .mono { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-family: Fraunces, serif; font-size: 14px; }
+  .brand b { display: block; font-weight: 500; line-height: 1.2; }
+  .brand small { color: var(--muted); font-size: 12px; }
+  .top-actions { display: flex; align-items: center; gap: 6px; }
+  @media (max-width: 560px) { .hide-sm { display: none; } .brand small { display: none; } }
+  main { max-width: 1240px; margin: 0 auto; padding: 20px 16px 60px; display: grid; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); min-width: 0; }
+  .card-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 16px; }
+  .card-h h2 { font-size: 15px; }
+  .grid { display: grid; gap: 16px; }
+  .g-hero { grid-template-columns: 1.6fr 1fr; }
+  .g-3 { grid-template-columns: 1fr 1fr 1.2fr; }
+  @media (max-width: 980px) { .g-hero, .g-3 { grid-template-columns: 1fr; } }
+
+  /* ---------- hero personas ---------- */
+  .hero-num { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .hero-num b { font-family: Fraunces, serif; font-weight: 400; font-size: 56px; line-height: 1; letter-spacing: -.02em; }
+  .hero-num span { color: var(--muted); font-size: 18px; }
+  .bar { display: flex; height: 12px; border-radius: 99px; overflow: hidden; background: var(--soft); margin: 18px 0 12px; }
+  .bar i { display: block; height: 100%; transition: width .6s ease; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .countdown { display: flex; flex-direction: column; justify-content: space-between; background: var(--ink); color: #fff; border-color: var(--ink); }
+  .countdown small { color: #ffffffa0; letter-spacing: .12em; text-transform: uppercase; font-size: 11px; }
+  .countdown b { font-family: Fraunces, serif; font-weight: 400; font-size: 56px; line-height: 1; }
+  .countdown p { margin: 6px 0 0; color: #ffffffb0; font-size: 14px; }
+
+  /* ---------- kpis ---------- */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .kpi { display: grid; gap: 10px; }
+  .kpi-top { display: flex; align-items: center; justify-content: space-between; color: var(--muted); font-size: 13px; }
+  .kpi-ic { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--soft); color: var(--ink); }
+  .kpi b { font-family: Fraunces, serif; font-weight: 400; font-size: 32px; line-height: 1; }
+  .kpi .mini { height: 4px; border-radius: 99px; background: var(--soft); overflow: hidden; }
+  .kpi .mini i { display: block; height: 100%; background: var(--ink); border-radius: 99px; transition: width .6s ease; }
+  .kpi small { color: var(--muted); font-size: 12px; }
+
+  /* ---------- donut ---------- */
+  .donut-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  .donut { width: 132px; height: 132px; position: relative; flex: none; }
+  .donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .donut circle { fill: none; stroke-width: 3.4; transition: stroke-dasharray .6s ease; }
+  .donut .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+  .donut .c b { font-family: Fraunces, serif; font-weight: 400; font-size: 28px; line-height: 1; }
+  .donut .c small { color: var(--muted); font-size: 11px; }
+  .dl { display: grid; gap: 10px; font-size: 14px; flex: 1; min-width: 140px; }
+  .dl div { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .dl span { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+
+  /* ---------- grupos ---------- */
+  .groups { display: grid; gap: 14px; }
+  .group-row { display: grid; gap: 6px; }
+  .group-row .t { display: flex; justify-content: space-between; font-size: 14px; }
+  .group-row .t span { color: var(--muted); font-size: 13px; }
+  .group-row .mini { height: 6px; border-radius: 99px; background: var(--soft); overflow: hidden; }
+  .group-row .mini i { display: block; height: 100%; background: var(--accent); border-radius: 99px; transition: width .6s ease; }
+
+  /* ---------- feed ---------- */
+  .feed { display: grid; gap: 2px; max-height: 300px; overflow: auto; margin: 0 -8px; }
+  .feed-item { display: flex; gap: 12px; padding: 10px 8px; border-radius: 10px; }
+  .feed-item:hover { background: var(--soft); }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: 13px; font-weight: 600; }
+  .feed-item b { font-weight: 500; }
+  .feed-item p { margin: 2px 0 0; font-size: 13px; color: var(--muted); }
+  .feed-item q { display: block; margin-top: 4px; font-size: 13px; color: var(--ink); font-style: italic; }
+  .empty { padding: 24px 0; text-align: center; color: var(--faint); font-size: 14px; }
+
+  /* ---------- toolbar ---------- */
+  .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .search { position: relative; flex: 1 1 220px; }
+  .search .ic { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--faint); }
+  .search .input { padding-left: 38px; }
+  .chips { display: flex; gap: 4px; padding: 4px; background: var(--soft); border-radius: 12px; overflow-x: auto; }
+  .chip { height: 32px; padding: 0 12px; border-radius: 9px; border: 0; background: transparent; cursor: pointer; color: var(--muted); font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .chip.on { background: var(--surface); color: var(--ink); box-shadow: 0 1px 2px #1c19171a; }
+  .chip em { font-style: normal; color: var(--faint); margin-left: 4px; }
+  select.input { width: auto; padding-right: 30px; }
+
+  /* ---------- tabla ---------- */
+  .table { width: 100%; border-collapse: collapse; }
+  .table th { text-align: left; font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); padding: 0 12px 10px; border-bottom: 1px solid var(--line); }
+  .table td { padding: 14px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; font-size: 14px; }
+  .table tr:last-child td { border-bottom: 0; }
+  .table tbody tr { transition: background .15s; }
+  .table tbody tr:hover { background: #faf9f7; }
+  .who b { font-weight: 500; display: block; }
+  .who small { color: var(--muted); font-size: 12px; display: inline-flex; align-items: center; gap: 4px; }
+  .tag { display: inline-flex; align-items: center; gap: 4px; height: 22px; padding: 0 8px; border-radius: 99px; font-size: 12px; background: var(--soft); color: var(--muted); }
+  .badge { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 99px; font-size: 12px; font-weight: 500; }
+  .badge.PENDIENTE { background: var(--wait-bg); color: var(--wait); }
+  .badge.CONFIRMADO { background: var(--ok-bg); color: var(--ok); }
+  .badge.RECHAZADO { background: var(--no-bg); color: var(--no); }
+  .badge .dot { background: currentColor; }
+  .sub { display: block; color: var(--faint); font-size: 12px; margin-top: 4px; }
+  .seats { display: flex; gap: 3px; margin-top: 4px; flex-wrap: wrap; max-width: 120px; }
+  .seats i { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .seats i.on { background: var(--ok); }
+  .track { display: grid; gap: 4px; font-size: 13px; color: var(--muted); }
+  .track span { display: inline-flex; align-items: center; gap: 6px; }
+  .track .ic { width: 15px; height: 15px; }
+  .track .yes { color: var(--ink); }
+  .note { max-width: 220px; font-size: 13px; color: var(--muted); font-style: italic; }
+  .acts { display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+
+  /* menu */
+  .menu { position: relative; }
+  .menu summary { list-style: none; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu-list { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 200px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px #1c19171f; }
+  .menu-list button { display: flex; align-items: center; gap: 10px; width: 100%; height: 36px; padding: 0 10px; border: 0; border-radius: 8px; background: transparent; cursor: pointer; font-size: 14px; text-align: left; }
+  .menu-list button:hover { background: var(--soft); }
+  .menu-list button.danger { color: var(--no); }
+  .menu-list hr { border: 0; border-top: 1px solid var(--line); margin: 6px 0; }
+
+  /* tabla -> cards en movil */
+  @media (max-width: 860px) {
+    .table thead { display: none; }
+    .table, .table tbody, .table tr, .table td { display: block; width: 100%; }
+    .table tr { border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+    .table td { border: 0; padding: 6px 0; }
+    .table td[data-l]::before { content: attr(data-l); display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin-bottom: 2px; }
+    .acts { justify-content: flex-start; flex-wrap: wrap; padding-top: 8px; }
+    .menu-list { left: 0; right: auto; }
+    .note { max-width: none; }
+  }
+
+  /* ---------- dialogs ---------- */
+  dialog { border: 0; border-radius: 18px; padding: 0; width: min(480px, calc(100vw - 32px)); box-shadow: 0 30px 80px #1c191740; color: var(--ink); }
+  dialog::backdrop { background: #1c191766; backdrop-filter: blur(2px); }
+  .dlg { padding: 24px; display: grid; gap: 14px; }
+  .dlg h3 { font-family: Fraunces, serif; font-size: 22px; }
+  .dlg .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .dlg footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 6px; }
+  .preview { white-space: pre-wrap; background: #e7f6ec; border-radius: 12px 12px 12px 4px; padding: 14px; font-size: 14px; line-height: 1.45; max-height: 50vh; overflow: auto; word-break: break-word; }
+
+  /* ---------- toast ---------- */
+  #toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 12px; font-size: 14px; opacity: 0; transition: .25s; pointer-events: none; display: flex; align-items: center; gap: 8px; z-index: 50; max-width: calc(100vw - 32px); }
+  #toast.on { opacity: 1; transform: translate(-50%, 0); }
 </style>
 </head>
 <body>
 
-<!-- LOGIN (solo admin) -->
+<!-- ================= LOGIN ================= -->
 <section id="login" hidden>
-  <h2>Ingreso administrador</h2>
-  <form id="login-form">
-    <input name="email" type="email" placeholder="Email" required autocomplete="username">
-    <input name="password" type="password" placeholder="Contraseña" required autocomplete="current-password">
-    <button class="primary">Entrar</button>
-    <p class="error" id="login-error"></p>
-  </form>
+  <div class="login-card">
+    <div class="mono">K&amp;W</div>
+    <h1>Panel de invitaciones</h1>
+    <p class="muted">Ingresa como administrador</p>
+    <form id="login-form">
+      <label class="field">Email
+        <input class="input" name="email" type="email" required autocomplete="username">
+      </label>
+      <label class="field">Contraseña
+        <input class="input" name="password" type="password" required autocomplete="current-password">
+      </label>
+      <button class="btn dark" style="height:42px;margin-top:4px">Entrar</button>
+      <p class="error" id="login-error"></p>
+    </form>
+  </div>
 </section>
 
-<!-- PANEL -->
+<!-- ================= PANEL ================= -->
 <div id="panel" hidden>
-  <header>
-    <h1>Invitaciones · Kandy &amp; Welinton</h1>
-    <div class="row">
-      <span id="admin-name" class="muted" style="color:#ddd"></span>
-      <a href="/" target="_blank" style="color:#fff">Ver index</a>
-      <button class="sm" id="logout">Salir</button>
+  <header class="top">
+    <div class="top-in">
+      <div class="brand">
+        <div class="mono">K&amp;W</div>
+        <div><b>Invitaciones</b><small id="admin-name"></small></div>
+      </div>
+      <div class="top-actions">
+        <a class="btn ghost sm" href="/" target="_blank" rel="noopener" title="Ver invitación general"><svg class="ic"><use href="#i-eye"/></svg><span class="hide-sm">Ver invitación</span></a>
+        <button class="btn dark sm" id="btn-new"><svg class="ic"><use href="#i-plus"/></svg>Nueva</button>
+        <button class="btn ghost icon" id="logout" title="Salir"><svg class="ic"><use href="#i-logout"/></svg></button>
+      </div>
     </div>
   </header>
 
   <main>
-    <section>
-      <h2>Resumen</h2>
-      <div class="stats" id="stats"></div>
-    </section>
+    <!-- Hero -->
+    <div class="grid g-hero">
+      <section class="card">
+        <div class="card-h"><h2 class="muted">Personas confirmadas</h2><span class="tag" id="pct-tag">0%</span></div>
+        <div class="hero-num"><b id="h-conf">0</b><span id="h-total">de 0 cupos</span></div>
+        <div class="bar" id="h-bar"></div>
+        <div class="legend" id="h-legend"></div>
+      </section>
+      <section class="card countdown">
+        <small>Faltan</small>
+        <div><b id="cd-days">0</b><p id="cd-text">días para el gran día</p></div>
+        <p>Sábado 20 · Febrero · 2027</p>
+      </section>
+    </div>
 
-    <section>
-      <h2 id="form-title">Nueva invitación</h2>
-      <form id="inv-form" class="row">
-        <input name="destino" placeholder="Destino (ej: Eduardo y Juliana)" required style="flex:2 1 240px">
-        <input name="cupos" type="number" min="1" value="1" placeholder="Cupos" required style="flex:0 1 90px">
-        <input name="telefono" placeholder="Teléfono WhatsApp">
-        <input name="grupo" placeholder="Grupo (Familia, Amigos…)" list="grupos">
-        <datalist id="grupos"></datalist>
-        <input name="notas" placeholder="Notas internas">
-        <button class="primary" id="form-submit">Crear</button>
-        <button type="button" id="form-cancel" hidden>Cancelar</button>
-      </form>
-    </section>
+    <!-- KPIs -->
+    <div class="kpis" id="kpis"></div>
 
-    <section>
-      <div class="row" style="justify-content:space-between;margin-bottom:10px">
-        <h2 style="margin:0">Invitaciones <span class="muted" id="count"></span></h2>
-        <div class="row">
-          <input id="f-q" placeholder="Buscar…">
-          <select id="f-estado">
-            <option value="">Todos</option>
-            <option value="PENDIENTE">Pendientes</option>
-            <option value="CONFIRMADO">Confirmados</option>
-            <option value="RECHAZADO">Rechazados</option>
-          </select>
-          <select id="f-enviada">
-            <option value="">Enviadas y no</option>
-            <option value="true">Enviadas</option>
-            <option value="false">Sin enviar</option>
-          </select>
+    <!-- Estado / grupos / respuestas -->
+    <div class="grid g-3">
+      <section class="card">
+        <div class="card-h"><h2>Estado de invitaciones</h2></div>
+        <div class="donut-wrap">
+          <div class="donut">
+            <svg viewBox="0 0 42 42" id="donut"></svg>
+            <div class="c"><b id="d-total">0</b><small>invitaciones</small></div>
+          </div>
+          <div class="dl" id="d-legend"></div>
         </div>
+      </section>
+      <section class="card">
+        <div class="card-h"><h2>Por grupo</h2><small class="faint">personas confirmadas</small></div>
+        <div class="groups" id="groups"></div>
+      </section>
+      <section class="card">
+        <div class="card-h"><h2>Últimas respuestas</h2><span class="tag"><span class="dot" style="background:var(--wa)"></span>en vivo</span></div>
+        <div class="feed" id="feed"></div>
+      </section>
+    </div>
+
+    <!-- Lista -->
+    <section class="card">
+      <div class="card-h"><h2>Invitaciones <span class="faint" id="count"></span></h2></div>
+      <div class="toolbar">
+        <label class="search">
+          <svg class="ic"><use href="#i-search"/></svg>
+          <input class="input" id="f-q" placeholder="Buscar por nombre, teléfono o email">
+        </label>
+        <div class="chips" id="f-estado"></div>
+        <select class="input" id="f-enviada">
+          <option value="">Envío: todas</option>
+          <option value="true">Enviadas</option>
+          <option value="false">Sin enviar</option>
+        </select>
+        <select class="input" id="f-grupo"><option value="">Grupo: todos</option></select>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Destino</th><th>Grupo</th><th>Cupos</th><th>Estado</th>
-              <th>Enviada</th><th>Vistas</th><th>Mensaje</th><th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
+      <table class="table">
+        <thead>
+          <tr><th>Invitado</th><th>Cupos</th><th>Estado</th><th>Seguimiento</th><th>Mensaje</th><th style="text-align:right">Acciones</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
     </section>
   </main>
 </div>
 
+<!-- ================= DIALOG: crear / editar ================= -->
+<dialog id="dlg-form">
+  <form class="dlg" id="inv-form" method="dialog">
+    <h3 id="form-title">Nueva invitación</h3>
+    <label class="field">Destino
+      <input class="input" name="destino" placeholder="Ej: Eduardo y Juliana" required>
+    </label>
+    <div class="row2">
+      <label class="field">Cupos
+        <input class="input" name="cupos" type="number" min="1" value="1" required>
+      </label>
+      <label class="field">Grupo
+        <input class="input" name="grupo" placeholder="Familia, Amigos…" list="grupos">
+      </label>
+    </div>
+    <datalist id="grupos"></datalist>
+    <label class="field">WhatsApp
+      <input class="input" name="telefono" inputmode="tel" placeholder="300 123 4567">
+    </label>
+    <label class="field">Notas internas
+      <textarea class="input" name="notas" rows="2" placeholder="Solo las ves tú"></textarea>
+    </label>
+    <footer>
+      <button type="button" class="btn" data-close>Cancelar</button>
+      <button class="btn dark" id="form-submit" value="save">Crear invitación</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- ================= DIALOG: confirmar manual ================= -->
+<dialog id="dlg-confirm">
+  <form class="dlg" id="confirm-form" method="dialog">
+    <h3>Confirmar asistencia</h3>
+    <p class="muted" id="confirm-who" style="margin:-6px 0 0"></p>
+    <div class="row2">
+      <label class="field">Personas que asisten
+        <select class="input" name="cupos" style="width:100%"></select>
+      </label>
+      <label class="field">¿Cómo te avisó?
+        <select class="input" name="metodo" style="width:100%">
+          <option value="WHATSAPP">WhatsApp</option>
+          <option value="LLAMADA">Llamada</option>
+          <option value="MANUAL">En persona / otro</option>
+        </select>
+      </label>
+    </div>
+    <footer>
+      <button type="button" class="btn" data-close>Cancelar</button>
+      <button class="btn dark" value="ok">Confirmar</button>
+    </footer>
+  </form>
+</dialog>
+
+<!-- ================= DIALOG: vista previa mensaje ================= -->
+<dialog id="dlg-preview">
+  <div class="dlg">
+    <h3>Mensaje de invitación</h3>
+    <div class="preview" id="preview-text"></div>
+    <footer>
+      <button type="button" class="btn" data-close>Cerrar</button>
+      <button type="button" class="btn" id="preview-copy"><svg class="ic"><use href="#i-copy"/></svg>Copiar</button>
+      <button type="button" class="btn wa" id="preview-wa"><svg class="ic fill"><use href="#i-wa"/></svg>Enviar</button>
+    </footer>
+  </div>
+</dialog>
+
 <div id="toast"></div>
+
+<!-- ================= ICONOS ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-msg" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-more" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5Z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></symbol>
+  </defs>
+</svg>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/admin.js"></script>
