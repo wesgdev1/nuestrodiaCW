@@ -9,12 +9,12 @@ import { responderInvitacion } from "../invitaciones/services.js";
 
 export const id = async (req, res, next, id) => {
   if (!UUID_REGEX.test(id)) {
-    return next({ message: "Invitacion no valida", status: 404 });
+    return next({ message: "Invitación no válida", status: 404 });
   }
   try {
     const invitacion = await prisma.invitacion.findUnique({ where: { id } });
     if (!invitacion) {
-      return next({ message: "Invitacion no valida", status: 404 });
+      return next({ message: "Invitación no válida", status: 404 });
     }
     req.data = invitacion;
     next();

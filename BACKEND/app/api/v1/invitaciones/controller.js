@@ -13,12 +13,12 @@ import { responderInvitacion, getStats } from "./services.js";
 // router.param: carga la invitacion en req.data
 export const id = async (req, res, next, id) => {
   if (!UUID_REGEX.test(id)) {
-    return next({ message: "Invitacion not found", status: 404 });
+    return next({ message: "Invitación no encontrada", status: 404 });
   }
   try {
     const invitacion = await prisma.invitacion.findUnique({ where: { id } });
     if (!invitacion) {
-      return next({ message: "Invitacion not found", status: 404 });
+      return next({ message: "Invitación no encontrada", status: 404 });
     }
     req.data = invitacion;
     next();
@@ -73,7 +73,7 @@ export const create = async (req, res, next) => {
     const invitacion = await prisma.invitacion.create({ data });
     res.status(201).json({
       data: withLink(invitacion),
-      message: "Invitacion creada",
+      message: "Invitación creada",
     });
   } catch (error) {
     next(error);
@@ -125,7 +125,7 @@ export const update = async (req, res, next) => {
       where: { id: req.data.id },
       data,
     });
-    res.json({ data: withLink(invitacion), message: "Invitacion actualizada" });
+    res.json({ data: withLink(invitacion), message: "Invitación actualizada" });
   } catch (error) {
     next(error);
   }
@@ -134,7 +134,7 @@ export const update = async (req, res, next) => {
 export const remove = async (req, res, next) => {
   try {
     await prisma.invitacion.delete({ where: { id: req.data.id } });
-    res.json({ data: req.data, message: "Invitacion eliminada" });
+    res.json({ data: req.data, message: "Invitación eliminada" });
   } catch (error) {
     next(error);
   }
@@ -161,7 +161,7 @@ export const enviar = async (req, res, next) => {
     res.json({
       data: withLink(invitacion),
       meta: { link, mensaje, whatsappUrl },
-      message: "Invitacion lista para enviar",
+      message: "Invitación lista para enviar",
     });
   } catch (error) {
     next(error);
@@ -204,7 +204,7 @@ export const reset = async (req, res, next) => {
         mensaje: null,
       },
     });
-    res.json({ data: withLink(invitacion), message: "Invitacion reiniciada" });
+    res.json({ data: withLink(invitacion), message: "Invitación reiniciada" });
   } catch (error) {
     next(error);
   }
