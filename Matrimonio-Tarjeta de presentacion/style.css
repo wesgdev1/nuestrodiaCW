@@ -124,8 +124,9 @@ p{font-size:16px;font-weight:300;line-height:1.7;color:#fdf6ece0;max-width:380px
 .station{overflow:hidden}
 .bgph{position:absolute;left:0;width:100%;object-fit:cover;z-index:0;pointer-events:none;will-change:transform}
 /* Inicio: foto arriba que se desvanece hacia el fondo */
-.hero{align-items:end}
-.hero-ph{top:0;height:78%;object-position:50% 30%;
+/* El texto arranca siempre debajo de los rostros (no depende del alto del celular) */
+.hero{align-items:start;padding-top:50vh;padding-top:50svh}
+.hero-ph{top:0;height:82vh;height:82svh;object-position:50% 30%;
   -webkit-mask-image:linear-gradient(#000 45%,transparent 98%);mask-image:linear-gradient(#000 45%,transparent 98%)}
 .hero::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:linear-gradient(135deg,#2b1b6b66,transparent 45%,#e8456d22)}
