@@ -57,7 +57,7 @@ export const all = async (req, res, next) => {
   try {
     const data = await prisma.invitacion.findMany({
       where,
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ createdAt: "desc" }, { destino: "asc" }, { id: "asc" }],
     });
     res.json({ data: data.map(withLink), meta: { total: data.length } });
   } catch (error) {
@@ -162,6 +162,32 @@ export const enviar = async (req, res, next) => {
       data: withLink(invitacion),
       meta: { link, mensaje, whatsappUrl },
       message: "Invitación lista para enviar",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * PATCH /invitaciones/:id/enviada
+ * body: { enviada: true | false } -> marca o desmarca como enviada (corregir errores)
+ */
+export const setEnviada = async (req, res, next) => {
+  const { enviada } = req.body;
+  if (typeof enviada !== "boolean") {
+    return next({ message: "enviada (true/false) es requerido", status: 400 });
+  }
+  try {
+    const invitacion = await prisma.invitacion.update({
+      where: { id: req.data.id },
+      data: {
+        enviada,
+        fechaEnvio: enviada ? req.data.fechaEnvio || new Date() : null,
+      },
+    });
+    res.json({
+      data: withLink(invitacion),
+      message: enviada ? "Marcada como enviada" : "Marcada como no enviada",
     });
   } catch (error) {
     next(error);

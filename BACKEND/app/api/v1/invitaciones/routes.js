@@ -13,6 +13,7 @@ export const router = Router();
  * /api/v1/invitaciones/stats          GET    - resumen confirmados / pendientes
  * /api/v1/invitaciones/:id            GET | PUT | PATCH | DELETE
  * /api/v1/invitaciones/:id/enviar     POST   - marca enviada + link + whatsappUrl
+ * /api/v1/invitaciones/:id/enviada    PATCH  - { enviada: true|false } marcar / desmarcar
  * /api/v1/invitaciones/:id/link       GET    - solo link (no marca enviada)
  * /api/v1/invitaciones/:id/responder  PATCH  - confirmar / rechazar manual
  * /api/v1/invitaciones/:id/reset      PATCH  - volver a PENDIENTE
@@ -33,6 +34,7 @@ router
   .delete(controller.remove);
 
 router.route("/:id/enviar").post(controller.enviar);
+router.route("/:id/enviada").patch(controller.setEnviada);
 router.route("/:id/link").get(controller.link);
 router.route("/:id/responder").patch(controller.responder);
 router.route("/:id/reset").patch(controller.reset);

@@ -309,9 +309,49 @@
   };
 
   // ---------- tabla ----------
+  // Paginacion (solo front): maximo POR_PAGINA filas visibles
+  const POR_PAGINA = 10;
+  let pagina = 1;
+
+  // Numeros de pagina con "…" cuando son muchas: 1 … 4 5 6 … 12
+  const paginasVisibles = (actual, total) => {
+    if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+    const set = new Set([1, total, actual - 1, actual, actual + 1]);
+    const out = [];
+    let prev = 0;
+    for (const n of [...set].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b)) {
+      if (n - prev > 1) out.push('…');
+      out.push(n);
+      prev = n;
+    }
+    return out;
+  };
+
+  const renderPager = (totalFilas, totalPaginas) => {
+    const nav = $('#pager');
+    nav.hidden = totalFilas <= POR_PAGINA;
+    if (nav.hidden) return (nav.innerHTML = '');
+    const desde = (pagina - 1) * POR_PAGINA + 1;
+    const hasta = Math.min(pagina * POR_PAGINA, totalFilas);
+    nav.innerHTML = `
+      <span class="pager-info">Mostrando <b>${desde}–${hasta}</b> de ${totalFilas}</span>
+      <div class="pager-nav">
+        <button class="btn icon" data-p="${pagina - 1}" ${pagina === 1 ? 'disabled' : ''} title="Anterior" aria-label="Página anterior">${icon('prev')}</button>
+        ${paginasVisibles(pagina, totalPaginas)
+          .map((n) => (n === '…' ? '<span class="gap">…</span>' : `<button class="btn${n === pagina ? ' on' : ''}" data-p="${n}" ${n === pagina ? 'aria-current="page"' : ''}>${n}</button>`))
+          .join('')}
+        <button class="btn icon" data-p="${pagina + 1}" ${pagina === totalPaginas ? 'disabled' : ''} title="Siguiente" aria-label="Página siguiente">${icon('next')}</button>
+      </div>`;
+  };
+
   const renderTabla = () => {
-    const rows = filtrar();
-    $('#count').textContent = `· ${rows.length}`;
+    const filtradas = filtrar();
+    $('#count').textContent = `· ${filtradas.length}`;
+
+    const totalPaginas = Math.max(1, Math.ceil(filtradas.length / POR_PAGINA));
+    pagina = Math.min(Math.max(1, pagina), totalPaginas);
+    const rows = filtradas.slice((pagina - 1) * POR_PAGINA, pagina * POR_PAGINA);
+    renderPager(filtradas.length, totalPaginas);
 
     $('#rows').innerHTML =
       rows
@@ -340,7 +380,8 @@
         </td>
         <td data-l="Seguimiento">
           <div class="track">
-            <span class="${x.enviada ? 'yes' : ''}">${icon(x.enviada ? 'check' : 'send')}${x.enviada ? `Enviada ${fecha(x.fechaEnvio)}` : 'Sin enviar'}</span>
+            <button class="sent-toggle${x.enviada ? ' on' : ''}" data-a="toggleEnviada"
+              title="${x.enviada ? 'Clic para marcar como NO enviada' : 'Clic para marcar como enviada'}">${icon(x.enviada ? 'check' : 'send')}${x.enviada ? `Enviada ${fecha(x.fechaEnvio)}` : 'Sin enviar · marcar'}</button>
             <span class="${x.vistas ? 'yes' : ''}">${icon('eye')}${x.vistas ? `${plural(x.vistas, 'vista', 'vistas')} · ${hace(x.ultimaVista)}` : 'No abierta'}</span>
           </div>
         </td>
@@ -355,7 +396,7 @@
               <div class="menu-list">
                 <button data-a="preview">${icon('msg')}Ver mensaje</button>
                 <button data-a="ver">${icon('eye')}Abrir invitación</button>
-                ${x.enviada ? '' : `<button data-a="marcarEnviada">${icon('send')}Marcar como enviada</button>`}
+                <button data-a="toggleEnviada">${icon(x.enviada ? 'reset' : 'send')}${x.enviada ? 'Marcar como no enviada' : 'Marcar como enviada'}</button>
                 <hr>
                 <button data-a="confirmar">${icon('check')}Confirmar asistencia</button>
                 <button data-a="rechazar">${icon('x')}Marcar que no asiste</button>
@@ -436,16 +477,10 @@
   };
 
   // ---------- acciones ----------
-  const marcarEnviada = async (x) => {
-    if (x.enviada) return;
-    await api(`/invitaciones/${x.id}/enviar`, { method: 'POST' });
-    load();
-  };
-
   const actions = {
+    // WhatsApp solo abre el chat; el estado "enviada" se cambia con su propio boton
     whatsapp(x) {
       window.open(whatsappUrl(x), '_blank', 'noopener');
-      marcarEnviada(x).catch((e) => toast(e.message, 'x'));
     },
     copiarMensaje: (x) => copy(buildMensaje(x), 'Mensaje copiado'),
     copiarLink: (x) => copy(x.link, 'Link copiado'),
@@ -455,9 +490,12 @@
       $('#preview-text').textContent = buildMensaje(x);
       $('#dlg-preview').showModal();
     },
-    async marcarEnviada(x) {
-      await marcarEnviada(x);
-      toast('Marcada como enviada');
+    async toggleEnviada(x) {
+      const enviada = !x.enviada;
+      if (!enviada && !confirm(`¿Marcar la invitación de ${x.destino} como NO enviada?`)) return;
+      await api(`/invitaciones/${x.id}/enviada`, { method: 'PATCH', body: { enviada } });
+      toast(enviada ? 'Marcada como enviada' : 'Marcada como no enviada', enviada ? 'check' : 'reset');
+      load();
     },
     confirmar(x) {
       confirmingId = x.id;
@@ -513,12 +551,22 @@
     });
   });
 
+  // ---------- paginacion ----------
+  $('#pager').addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-p]');
+    if (!b || b.disabled) return;
+    pagina = Number(b.dataset.p);
+    renderTabla();
+    $('#rows').closest('section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
   // ---------- filtros ----------
   let deb;
   $('#f-q').oninput = (e) => {
     clearTimeout(deb);
     deb = setTimeout(() => {
       filtros.q = e.target.value.trim();
+      pagina = 1;
       renderTabla();
     }, 200);
   };
@@ -526,15 +574,18 @@
     const b = e.target.closest('.chip');
     if (!b) return;
     filtros.estado = b.dataset.v;
+    pagina = 1;
     renderFiltros();
     renderTabla();
   };
   $('#f-enviada').onchange = (e) => {
     filtros.enviada = e.target.value;
+    pagina = 1;
     renderTabla();
   };
   $('#f-grupo').onchange = (e) => {
     filtros.grupo = e.target.value;
+    pagina = 1;
     renderTabla();
   };
 
