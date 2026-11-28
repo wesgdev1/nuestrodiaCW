@@ -116,6 +116,7 @@ p{font-size:16px;font-weight:300;line-height:1.7;color:#fdf6ece0;max-width:380px
 .info b{font-family:var(--serif);font-style:italic;font-weight:400;font-size:20px;color:var(--gold)}
 .info p{margin:0;font-size:15px}
 .info p span{font-size:inherit;color:inherit}
+.info p b{font-family:inherit;font-style:normal;font-size:inherit;font-weight:500}
 .info a{color:var(--gold)}
 .sign{font-family:var(--script);font-size:56px;line-height:1;color:var(--rose);margin-top:26px}
 
@@ -165,9 +166,9 @@ p{font-size:16px;font-weight:300;line-height:1.7;color:#fdf6ece0;max-width:380px
 .strip{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;max-width:340px;margin:4px auto 20px}
 .strip i{width:24px;height:24px;border-radius:50%;background:var(--c);border:1.5px solid #fdf6ec33}
 .rules{list-style:none;display:grid;gap:8px;max-width:380px;margin:0 auto 6px;text-align:left}
-.rules li{display:flex;gap:12px;align-items:baseline;font-size:15px;font-weight:300;line-height:1.5;color:#fdf6ece0}
+.rules li{display:block;position:relative;padding-left:34px;font-size:15px;font-weight:300;line-height:1.5;color:#fdf6ece0}
 .rules span{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;
-  background:var(--gold);color:var(--deep);transform:translateY(4px)}
+  background:var(--gold);color:var(--deep);position:absolute;left:0;top:.2em}
 .rules .no span{background:var(--accent);color:var(--ivory)}
 .rules b{color:var(--gold);font-weight:500}
 
